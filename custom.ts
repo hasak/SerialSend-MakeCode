@@ -22,10 +22,4 @@ namespace custom {
     export function sendSerial(key: string, val: string): void {
         serial.writeLine("{id:"+control.deviceName()+","+key+":"+val+"}");
     }
-
-    //% block="magnitude of 3d vector | at x $x and y $y and z $z"
-    //% inlineInputMode=external
-    export function mag3d(x: number, y: number, z: number): number {
-        return Math.sqrt(x * x + y * y + z * z);
-    }
 }
