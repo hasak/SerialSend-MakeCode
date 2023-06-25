@@ -4,6 +4,16 @@
 * Read more at https://makecode.calliope.cc/blocks/custom
 */
 
+function replaceForJson(input: string): string{
+    let ret=input;
+    for(let i=0;i<input.length;i++){
+        if(input.charAt(i)==':' || input.charAt(i)==','){
+            ret=ret.substr(0,i)+"_"+ret.substr(i+1);
+        }
+    }
+    return ret;
+}
+
 /**
  * Custom blocks
  */
@@ -20,6 +30,8 @@ namespace custom {
     //% key.shadowOptions.toString=true
     //% val.shadowOptions.toString=true
     export function sendSerial(key: string, val: string): void {
+        key = replaceForJson(key); // replacing ':' and ',' with '_' to
+        val = replaceForJson(val); // not conflict with JSON
         serial.writeLine("{id:"+control.deviceName()+","+key+":"+val+"}");
     }
 }
