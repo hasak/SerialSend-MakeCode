@@ -1,4 +1,4 @@
 basic.forever(function () {
-    custom.sendSerialWithMinInterval("compass", "" + (input.compassHeading()))
-    custom.sendSerialWithMinInterval("key", "value")
+    custom.sendSerial("compass", "" + (input.compassHeading()))
+    custom.sendSerialWithMinInterval("temp", "" + (input.temperature()))
 })
