@@ -14,12 +14,15 @@ function replaceForJson(input: string): string{
     return ret;
 }
 
+let time=input.runningTime();
+let minInterval=1000; // in milliseconds
+
 /**
  * Custom blocks
  */
 //% weight=100 color=#230069 icon=""
 namespace custom {
-    
+
     /**
      * Send key:value pair over serial
      * @param key key, eg:"key"
@@ -32,6 +35,24 @@ namespace custom {
     export function sendSerial(key: string, val: string): void {
         key = replaceForJson(key); // replacing ':' and ',' with '_' to
         val = replaceForJson(val); // not conflict with JSON
-        serial.writeLine("{id:"+control.deviceName()+","+key+":"+val+"}");
+        serial.writeLine("{id:" + control.deviceName() + "," + key + ":" + val + "}");
+    }
+
+    /**
+     * Send key:value pair over serial with min delay
+     * @param key key, eg:"key"
+     * @param val value, eg:"value"
+     */
+
+    //% block="send over serial with min delay $key = $val"
+    //% key.shadowOptions.toString=true
+    //% val.shadowOptions.toString=true
+    export function sendSerialWithMinInterval(key: string, val: string): void {
+        if(input.runningTime()-time>=minInterval){
+            key = replaceForJson(key); // replacing ':' and ',' with '_' to
+            val = replaceForJson(val); // not conflict with JSON
+            serial.writeLine("{id:" + control.deviceName() + "," + key + ":" + val + "}");
+            time=input.runningTime();
+        }
     }
 }
